@@ -1,0 +1,42 @@
+.showcased-work {
+  box-shadow: rgba(92, 92, 92, 0.2) 0px 7px 25px 0px;
+  border-radius: 0.5rem;
+  height: 20vh;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+.list {
+  background-color: #303030;
+  color: #e4e4e4;
+  width: 80%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 60vh;
+}
+
+input {
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #303030;
+  border: none;
+  border-bottom: 1px solid rgb(233, 233, 233);
+  color: rgb(233, 233, 233);
+}
+
+input:focus {
+  outline: none;
+}
