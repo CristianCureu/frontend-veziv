@@ -1,11 +1,12 @@
 import "./components.css";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { toast } from "react-toastify";
 
 const ShowcasedWork = ({
   id,
@@ -25,12 +26,13 @@ const ShowcasedWork = ({
         const response = await fetch(
           `${process.env.REACT_APP_BASE_URL}/photo/${photo}`
         );
-        console.log(response);
         if (response.status === 200) {
           setPicture(response.url);
         }
       } catch (error) {
-        console.log(error);
+        toast.error(error.message, {
+          position: "bottom-right",
+        });
       }
     };
     photo && getPhoto();
@@ -39,7 +41,9 @@ const ShowcasedWork = ({
   return (
     <div className="showcased-work">
       <h2>{title}</h2>
-      <p>{url}</p>
+      <a target="blank" href={url}>
+        {url}
+      </a>
       {picture ? (
         <img src={picture} alt="showcased work photo" />
       ) : (

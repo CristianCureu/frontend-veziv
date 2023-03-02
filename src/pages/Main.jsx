@@ -2,14 +2,13 @@ import "./pages.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ShowcasedWorksList from "../components/ShowcasedWorksList";
-import HiddenShowcasedWorksList from "../components/HiddenShowcasedWorksList";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
 
 const Main = () => {
   const [showcasedWorks, setShowcasedWorks] = useState([]);
-  const [hiddenShowcasedWorks, setHiddenShowcasedWorks] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const getList = async () => {
     try {
@@ -17,7 +16,9 @@ const Main = () => {
       const response = await res.json();
       setShowcasedWorks(response);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message, {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -27,7 +28,9 @@ const Main = () => {
       const response = await res.json();
       setShowcasedWorks(response);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message, {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -40,7 +43,9 @@ const Main = () => {
       const data = await response.json();
       setShowcasedWorks(oldItems.filter((el) => el._id !== data._id));
     } catch (error) {
-      console.log(error);
+      toast.error(error.message, {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -54,7 +59,6 @@ const Main = () => {
         body: formData,
       });
       const data = await response.json();
-      console.log(data)
       setShowcasedWorks(oldItems.filter((el) => el._id !== data._id));
     } catch (error) {
       toast.error(error.message, {
@@ -67,30 +71,25 @@ const Main = () => {
     <div className="page">
       <h1>Showcased Works</h1>
       <Link to="/create">
-        <Button variant="outlined" startIcon={<AddIcon />}>
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          sx={{ margin: "2rem" }}
+        >
           Add showcased work
         </Button>
       </Link>
-      <Button onClick={() => setHiddenShowcasedWorks(!hiddenShowcasedWorks)}>
-        {hiddenShowcasedWorks
-          ? "Show not hidden showcased works"
-          : "Show hidden showcased works"}
+      <Button onClick={() => setHidden(!hidden)}>
+        {hidden ? "Display not hidden items" : "DIsplay hidden items"}
       </Button>
-      {hiddenShowcasedWorks ? (
-        <HiddenShowcasedWorksList
-          getHiddenList={getHiddenList}
-          showcasedWorks={showcasedWorks}
-          deleteItem={deleteItem}
-          hideItem={hideItem}
-        />
-      ) : (
-        <ShowcasedWorksList
-          getList={getList}
-          showcasedWorks={showcasedWorks}
-          deleteItem={deleteItem}
-          hideItem={hideItem}
-        />
-      )}
+      <ShowcasedWorksList
+        getList={getList}
+        getHiddenList={getHiddenList}
+        showcasedWorks={showcasedWorks}
+        deleteItem={deleteItem}
+        hideItem={hideItem}
+        hidden={hidden}
+      />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { checkUrl } from "../validation";
 
 const Form = () => {
   const { pathname } = useLocation();
@@ -19,8 +19,8 @@ const Form = () => {
     formData.append("title", info.title);
     info.url && formData.append("url", info.url);
     info.photo && formData.append("photo", info.photo);
-    if (!info.title?.length) {
-      toast.error("Title is mandatory", {
+    if (info.url?.length && !checkUrl(info.url)) {
+      toast.error("Please provide a valid URL!", {
         position: "bottom-right",
       });
     } else {
@@ -30,7 +30,6 @@ const Form = () => {
           body: formData,
         });
         const response = await res.json();
-        console.log(response);
         if (response.statusCode === 500) {
           toast.error(response.message, {
             position: "bottom-right",
@@ -46,8 +45,7 @@ const Form = () => {
           );
         }
       } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong!", {
+        toast.error(error.message, {
           position: "bottom-right",
         });
       }
@@ -63,7 +61,9 @@ const Form = () => {
         const data = await response.json();
         setInfo(data);
       } catch (error) {
-        console.log(error);
+        toast.error(error.message, {
+          position: "bottom-right",
+        });
       }
     };
     pathname !== "/create" && getInfo();
