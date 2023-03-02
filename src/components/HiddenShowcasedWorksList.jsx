@@ -1,16 +1,15 @@
 import "./components.css";
 import { useEffect } from "react";
 import ShowcasedWork from "./ShowcasedWork";
-import { useLocation } from "react-router-dom";
 
-const ShowcasedWorksList = ({
-  getList,
+const HiddenShowcasedWorksList = ({
+  getHiddenList,
   showcasedWorks,
   deleteItem,
   hideItem,
 }) => {
   useEffect(() => {
-    getList();
+    getHiddenList();
   }, []);
 
   return (
@@ -23,7 +22,6 @@ const ShowcasedWorksList = ({
               title={item.title}
               url={item.url}
               photo={item.photo}
-              isVissible={item.isVissible}
               deleteItem={deleteItem}
               hideItem={hideItem}
             />
@@ -33,4 +31,4 @@ const ShowcasedWorksList = ({
   );
 };
 
-export default ShowcasedWorksList;
+export default HiddenShowcasedWorksList;

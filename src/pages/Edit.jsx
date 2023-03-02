@@ -2,13 +2,13 @@ import "./pages.css";
 import Form from "../components/Form";
 import Header from "../components/Header";
 
-const Create = () => {
+const Edit = () => {
   return (
     <div className="page">
-      <Header title="Create showcased work" />
+      <Header title="Edit showcased work" />
       <Form />
     </div>
   );
 };
 
-export default Create;
+export default Edit;
